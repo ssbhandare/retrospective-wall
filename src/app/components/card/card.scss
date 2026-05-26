@@ -1,0 +1,37 @@
+.card {
+  background: #f7f8fa;
+  padding: 14px;
+  border-radius: 12px;
+  min-height: 70px;
+  line-height: 1.5;
+  word-break: break-word;
+  border: 1px solid #ececec;
+
+  transition: all 0.2s ease;
+
+  cursor: grab;
+}
+
+.card:hover {
+  background: #ffffff;
+  transform: translateY(-2px);
+}
+
+.card:active {
+  cursor: grabbing;
+}
+
+.modal-content {
+  border-radius: 16px;
+  border: none;
+}
+
+.modal-header,
+.modal-footer {
+  border: none;
+}
+
+textarea.form-control {
+  resize: none;
+  border-radius: 12px;
+}

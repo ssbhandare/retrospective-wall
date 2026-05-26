@@ -1,0 +1,66 @@
+<div class="board-title">
+  Retrospective Wall
+</div>
+<div class="board-toolbar">
+
+  <div class="toolbar-group">
+
+    <label>
+      View Section
+    </label>
+
+    <select [(ngModel)]="selectedSection">
+
+      <option value="all">
+        All Sections
+      </option>
+
+      @for (section of sections; track section.id) {
+
+        <option [value]="section.id">
+
+          {{ section.title }}
+
+        </option>
+
+      }
+
+    </select>
+
+  </div>
+
+  <div class="toolbar-group">
+
+    <label>
+      Sort By
+    </label>
+
+    <select
+      [(ngModel)]="sortType"
+      (change)="sortCards()">
+
+      <option value="created">
+        Created Time
+      </option>
+
+      <option value="alphabetical">
+        Alphabetical
+      </option>
+
+    </select>
+
+  </div>
+
+</div>
+<div class="board" cdkDropListGroup>
+
+  @for (section of filteredSections; track section.id) {
+
+   <app-column
+  [section]="section"
+  (boardUpdated)="saveBoard()">
+</app-column>
+
+  }
+
+</div>

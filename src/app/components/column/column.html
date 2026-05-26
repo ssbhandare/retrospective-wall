@@ -1,0 +1,91 @@
+<div class="column" [class.went-well]="section.id === 'went-well'" [class.improved]="section.id === 'improved'"
+    [class.start-doing]="section.id === 'start-doing'" [class.action-items]="section.id === 'action-items'">
+    <div class="column-header">
+        <h2>{{ section.title }}</h2>
+
+        <button (click)="showCardInput()">+</button>
+    </div>
+
+    <div class="cards" cdkDropList [cdkDropListData]="section.cards" (cdkDropListDropped)="drop($event)">
+        @if (!section.cards.length && !showInput) {
+
+        <div class="empty-state">
+            No cards yet
+        </div>
+
+        }
+        @for (card of section.cards; track card.id) {
+        <div class="card" cdkDrag>
+
+            <div class="card-content">
+                {{ card.text }}
+
+            </div>
+
+            <button class="delete-btn" (click)="deleteCard(card.id)">
+
+                ✕
+
+            </button>
+
+        </div>
+        }
+
+        @if (showInput) {
+        <input #cardInput [(ngModel)]="newCardText" (keyup.enter)="addCard()" (keydown.escape)="showInput = false"
+            placeholder="Enter card text" />
+        }
+    </div>
+</div>
+
+@if (selectedCard) {
+
+<div class="modal fade show d-block" tabindex="-1">
+
+    <div class="modal-dialog modal-dialog-centered">
+
+        <div class="modal-content">
+
+            <div class="modal-header">
+
+                <h5 class="modal-title">
+                    Edit Card
+                </h5>
+
+                <button type="button" class="btn-close" (click)="selectedCard = null">
+                </button>
+
+            </div>
+
+            <div class="modal-body">
+
+                <textarea class="form-control" rows="5" [(ngModel)]="editedText">
+                </textarea>
+
+            </div>
+
+            <div class="modal-footer">
+
+                <button type="button" class="btn btn-secondary" (click)="selectedCard = null">
+
+                    Cancel
+
+                </button>
+
+                <button type="button" class="btn btn-success" (click)="saveEditedCard()">
+
+                    Save
+
+                </button>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<div class="modal-backdrop fade show"></div>
+
+}
