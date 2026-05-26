@@ -1,5 +1,4 @@
-<div class="column" [class.went-well]="section.id === 'went-well'" [class.improved]="section.id === 'improved'"
-    [class.start-doing]="section.id === 'start-doing'" [class.action-items]="section.id === 'action-items'">
+<div class="column" [class]="section.id">
     <div class="column-header">
         <h2>{{ section.title }}</h2>
 
@@ -9,31 +8,29 @@
     <div class="cards" cdkDropList [cdkDropListData]="section.cards" (cdkDropListDropped)="drop($event)">
         @if (!section.cards.length && !showInput) {
 
-        <div class="empty-state">
+        <div class="no-card">
             No cards yet
         </div>
 
         }
         @for (card of section.cards; track card.id) {
-        <div class="card" cdkDrag>
+        <div class="retro-card" cdkDrag>
 
             <div class="card-content">
                 {{ card.text }}
-
             </div>
-
-            <button class="delete-btn" (click)="deleteCard(card.id)">
-
-                ✕
-
-            </button>
+            <div class="card-footer">               
+                <button class="delete-btn" (click)="deleteCard(card.id)">✕</button>
+                <button class="edit-btn" (click)="editCard(card)">✎</button>
+            </div>
 
         </div>
         }
 
         @if (showInput) {
-        <input #cardInput [(ngModel)]="newCardText" (keyup.enter)="addCard()" (keydown.escape)="showInput = false"
-            placeholder="Enter card text" />
+        <textarea #cardInput [(ngModel)]="newCardText" (keyup.enter)="addCard()" (keydown.escape)="showInput = false"
+            placeholder="Enter card text" >
+        </textarea>
         }
     </div>
 </div>

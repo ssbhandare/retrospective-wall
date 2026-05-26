@@ -18,7 +18,6 @@ export class BoardComponent implements OnInit {
   sections: RetroSection[] = [];
   selectedSection = 'all';
 
-  sortType = 'created';
   constructor(private boardService: BoardService) {}
 
   ngOnInit(): void {
@@ -67,17 +66,5 @@ export class BoardComponent implements OnInit {
     return this.sections.filter((section) => section.id === this.selectedSection);
   }
 
-  sortCards() {
-    this.sections.forEach((section) => {
-      section.cards.sort((a, b) => {
-        if (this.sortType === 'created') {
-          return new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime();
-        }
 
-        return a.text.localeCompare(b.text);
-      });
-    });
-
-    this.saveBoard();
-  }
 }

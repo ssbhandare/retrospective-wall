@@ -1,8 +1,7 @@
 import { RetroSection } from '../../models/board.model';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
-import {
-  ChangeDetectionStrategy,
+import {  
   Component,
   ElementRef,
   EventEmitter,
@@ -10,6 +9,7 @@ import {
   Output,
   ViewChild,
 } from '@angular/core';
+
 import {
   CdkDrag,
   CdkDropList,
@@ -24,7 +24,6 @@ import { CardComponent } from '../card/card';
   imports: [CommonModule, FormsModule, CdkDropList, CdkDrag, CardComponent],
   templateUrl: './column.html',
   styleUrl: './column.scss',
-  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ColumnComponent {
   @Input() section!: RetroSection;
@@ -82,7 +81,6 @@ export class ColumnComponent {
   }
   editCard(card: any) {
     this.selectedCard = card;
-
     this.editedText = card.text;
   }
 
