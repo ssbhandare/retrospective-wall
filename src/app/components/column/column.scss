@@ -45,11 +45,7 @@
       border-radius: 50%;
       cursor: pointer;
       font-size: 20px;
-      transition: 0.2s ease;
 
-      &:hover {
-        transform: scale(1.08);
-      }
     }
   }
 }
@@ -67,7 +63,7 @@
   gap: 12px;
   min-height: 250px;
 
-  .retro-card {
+  .task-card {
     cursor: grab;
     background: white;
     padding: 10px;
@@ -123,11 +119,11 @@ textarea {
 
 
 
-.card {
+.task-card {
   cursor: grab;
 }
 
-.card:active {
+.task-card:active {
   cursor: grabbing;
 }
 

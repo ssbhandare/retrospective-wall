@@ -1,14 +1,7 @@
 import { RetroSection } from '../../models/board.model';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
-import {  
-  Component,
-  ElementRef,
-  EventEmitter,
-  Input,
-  Output,
-  ViewChild,
-} from '@angular/core';
+import { Component, ElementRef, EventEmitter, Input, Output, ViewChild } from '@angular/core';
 
 import {
   CdkDrag,
@@ -17,11 +10,10 @@ import {
   moveItemInArray,
   transferArrayItem,
 } from '@angular/cdk/drag-drop';
-import { CardComponent } from '../card/card';
 @Component({
   selector: 'app-column',
   standalone: true,
-  imports: [CommonModule, FormsModule, CdkDropList, CdkDrag, CardComponent],
+  imports: [CommonModule, FormsModule, CdkDropList, CdkDrag],
   templateUrl: './column.html',
   styleUrl: './column.scss',
 })
@@ -42,22 +34,18 @@ export class ColumnComponent {
       return;
     }
 
-    const updatedCards = [
-      ...this.section.cards,
-      {
-        id: Date.now(),
-        text: this.newCardText,
-        createdAt: new Date(),
-      },
-    ];
-
-    this.section.cards = updatedCards;
+    this.section.cards.push({
+      id: Date.now(),
+      text: this.newCardText,
+      createdAt: new Date(),
+    });
 
     this.newCardText = '';
     this.showInput = false;
 
     this.boardUpdated.emit();
   }
+
   showCardInput() {
     this.showInput = true;
 
@@ -79,20 +67,26 @@ export class ColumnComponent {
     }
     this.boardUpdated.emit();
   }
+
   editCard(card: any) {
     this.selectedCard = card;
     this.editedText = card.text;
   }
 
-  saveEditedCard() {
-    if (!this.editedText.trim()) {
-      return;
-    }
-    this.selectedCard.text = this.editedText;
-    this.section.cards = [...this.section.cards];
-    this.selectedCard = null;
-    this.boardUpdated.emit();
+saveEditedCard() {
+
+  if (!this.editedText.trim()) {
+    return;
   }
+
+  this.selectedCard.text = this.editedText;
+
+  this.selectedCard = null;
+
+  this.boardUpdated.emit();
+
+}
+
   deleteCard(cardId: number) {
     this.section.cards = this.section.cards.filter((card) => card.id !== cardId);
     this.boardUpdated.emit();

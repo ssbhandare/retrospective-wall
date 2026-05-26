@@ -1,32 +1,26 @@
 <div class="column" [class]="section.id">
     <div class="column-header">
         <h2>{{ section.title }}</h2>
-
         <button (click)="showCardInput()">+</button>
     </div>
 
     <div class="cards" cdkDropList [cdkDropListData]="section.cards" (cdkDropListDropped)="drop($event)">
         @if (!section.cards.length && !showInput) {
-
         <div class="no-card">
             No cards yet
         </div>
-
         }
         @for (card of section.cards; track card.id) {
-        <div class="retro-card" cdkDrag>
-
+        <div class="task-card" cdkDrag>
             <div class="card-content">
                 {{ card.text }}
             </div>
             <div class="card-footer">               
-                <button class="delete-btn" (click)="deleteCard(card.id)">✕</button>
-                <button class="edit-btn" (click)="editCard(card)">✎</button>
+                <button class="delete-btn" (click)="deleteCard(card.id); $event.stopPropagation()">✕</button>
+                <button class="edit-btn" (click)="editCard(card); $event.stopPropagation()">✎</button>
             </div>
-
         </div>
         }
-
         @if (showInput) {
         <textarea #cardInput [(ngModel)]="newCardText" (keyup.enter)="addCard()" (keydown.escape)="showInput = false"
             placeholder="Enter card text" >
@@ -36,53 +30,22 @@
 </div>
 
 @if (selectedCard) {
-
 <div class="modal fade show d-block" tabindex="-1">
-
     <div class="modal-dialog modal-dialog-centered">
-
         <div class="modal-content">
-
             <div class="modal-header">
-
-                <h5 class="modal-title">
-                    Edit Card
-                </h5>
-
-                <button type="button" class="btn-close" (click)="selectedCard = null">
-                </button>
-
+                <h5 class="modal-title">Edit Card</h5>
+                <button type="button" class="btn-close" (click)="selectedCard = null"></button>
             </div>
-
             <div class="modal-body">
-
-                <textarea class="form-control" rows="5" [(ngModel)]="editedText">
-                </textarea>
-
+                <textarea class="form-control" rows="5" [(ngModel)]="editedText"></textarea>
             </div>
-
             <div class="modal-footer">
-
-                <button type="button" class="btn btn-secondary" (click)="selectedCard = null">
-
-                    Cancel
-
-                </button>
-
-                <button type="button" class="btn btn-success" (click)="saveEditedCard()">
-
-                    Save
-
-                </button>
-
+                <button type="button" class="btn btn-secondary" (click)="selectedCard = null">Cancel</button>
+                <button type="button" class="btn btn-success" (click)="saveEditedCard()">Save</button>
             </div>
-
         </div>
-
     </div>
-
 </div>
-
 <div class="modal-backdrop fade show"></div>
-
 }

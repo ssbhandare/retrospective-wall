@@ -7,10 +7,32 @@ import { BoardService } from '../../services/board.service';
 import { CdkDropListGroup } from '@angular/cdk/drag-drop';
 import { FormsModule } from '@angular/forms';
 
+const defaultSections: RetroSection[] = [
+  {
+    id: 'went-well',
+    title: 'What went well',
+    cards: [],
+  },
+  {
+    id: 'improved',
+    title: 'What can be improved',
+    cards: [],
+  },
+  {
+    id: 'start-doing',
+    title: 'Start doing',
+    cards: [],
+  },
+  {
+    id: 'action-items',
+    title: 'Action items',
+    cards: [],
+  },
+];
 @Component({
   selector: 'app-board',
   standalone: true,
-  imports: [CommonModule, ColumnComponent, CdkDropListGroup,FormsModule],
+  imports: [CommonModule, ColumnComponent, CdkDropListGroup, FormsModule],
   templateUrl: './board.html',
   styleUrl: './board.scss',
 })
@@ -24,36 +46,13 @@ export class BoardComponent implements OnInit {
     const savedBoard = this.boardService.getBoard();
 
     if (savedBoard?.length) {
-      // this.sections = savedBoard;
-      this.sections = [...savedBoard];
+      this.sections = savedBoard;
     } else {
-      this.sections = [
-        {
-          id: 'went-well',
-          title: 'What went well',
-          cards: [],
-        },
-        {
-          id: 'improved',
-          title: 'What can be improved',
-          cards: [],
-        },
-        {
-          id: 'start-doing',
-          title: 'Start doing',
-          cards: [],
-        },
-        {
-          id: 'action-items',
-          title: 'Action items',
-          cards: [],
-        },
-      ];
-
+      this.sections = defaultSections;
+      // Save default board on first load and every time when board is updated
       this.saveBoard();
     }
   }
-
   saveBoard() {
     this.boardService.saveBoard(this.sections);
   }
@@ -65,6 +64,4 @@ export class BoardComponent implements OnInit {
 
     return this.sections.filter((section) => section.id === this.selectedSection);
   }
-
-
 }
